@@ -6,25 +6,45 @@ class URL:
 
     def __init__(self,url):
         self.schema , url = url.split("://",1)
-        assert self.schema in ["http","https"]
+        assert self.schema in ["http","https","file"]
         
         if self.schema=="http":
             self.port = 80
         elif self.schema=="https":
             self.port = 443
+        
+        if(self.schema == "file"):
+            self.path = url
+        else:
+            if "/"  not in url:
+                url += "/"
+            self.host , url = url.split("/",1)
+            self.path = '/'+ url
 
-        if "/"  not in url:
-            url += "/"
-        self.host , url = url.split("/",1)
-        self.path = '/'+ url
-
-        if ":" in self.host:
-            self.host , port = self.host.split(":",1)
-            self.port = int (port)
+            if ":" in self.host:
+                self.host , port = self.host.split(":",1)
+                self.port = int (port)
 
     def __request__(self):
+
+        # Making changes to the engine so that it opens the file
+
+        if self.schema == "file":
+            file_path = self.path
+            
+            try:
+                file = open(file_path,'r')
+            except:
+                file = open("./tempFdir/incorrect.txt",'r')
+            content = file.read()
+
+            return content
+
         s = socket.socket(family=socket.AF_INET,type=socket.SOCK_STREAM,proto=socket.IPPROTO_TCP,)
         s.connect((self.host,self.port))
+        
+
+
         
         if self.schema=="https":
             ctx = ssl.create_default_context()
