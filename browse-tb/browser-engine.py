@@ -5,15 +5,17 @@ import ssl
 class URL:
 
     def __init__(self,url):
-        self.schema , url = url.split("://",1)
-        assert self.schema in ["http","https","file"]
+        self.schema , url = url.split(":/",1)
+        assert self.schema in ["http","https","file","data"]
         
+        url = url[1:]
+
         if self.schema=="http":
             self.port = 80
         elif self.schema=="https":
             self.port = 443
         
-        if(self.schema == "file"):
+        if self.schema == "file" or self.schema=="data":
             self.path = url
         else:
             if "/"  not in url:
@@ -26,6 +28,11 @@ class URL:
                 self.port = int (port)
 
     def __request__(self):
+        
+        # data schema implementation
+
+        if self.schema=="data":
+            return self.path
 
         # Making changes to the engine so that it opens the file
 
