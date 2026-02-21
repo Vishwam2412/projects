@@ -1,90 +1,38 @@
 import socket
 import ssl
+import tkinter
 
-# for HTML parshing i suppose 🤔
-
-class Text:
-    def __init__(self,text,parent):
-        self.text = text
-        self.parent = parent
-        self.children = []
-class Element:
-    def __init__(self,tag,attributes,parent):
-        self.tag = tag
-        self.attributes = attributes
-        self.parent = parent
-        self.children = []
-
-class TreeNode:
-    def __init__(self,data):
-        self.data = data
-        self.children = []
-
-'''///////////////////////////////////////////'''
-
-'''
-class htmlParser:
-    def htmlTree(self):
-        in_tag = false
-        text = ""
-        #node = TreeNode()
-        stack = []
-        for c in page:
-            if c=='<':
-                in_tag = True
-                stack.append(text) 
-                text=""
-            elif c=='>':
-                in_tag = False
-                stack.append(text)
-                text = ""
-            else:
-                text += c
-
-
-        if not in_tag and text:
-            self.add_text(text)
-'''
-
-def htmlTree(page):
+WEDTH , HEIGHT = 800 , 600
+class Browser:
+    def __init__(self):
+        self.window = tkinter.Tk()
+        self.canvas = tkinter.Canvas(
+                self.window,
+                width = WEDTH,
+                height = HEIGHT
+            )
+        self.canvas.pack()
     
-    root = Element("root",{},None)
-    stack = [root]
-    text = ""
+    def load(self,url):
+        obj = URL(url)
+        body = obj.__request__()
+        te = lex(body)
+        self.canvas.create_rectangle(10,20,400,300)
+        self.canvas.create_oval(100,100,150,150)
+        '''
 
-    for c in page:
-        if c=='<':
-            in_tag = True
-            txt = Text(text,stack[-1])
-            stack[-1].children.append(txt)
-            text=""
-        elif c=='>':
-            if text.startswith('/'):
-                stack.pop()
-            else:
-                parts = text.split(' ')
-                tag_name = parts[0]
-                new_el = Element(tag_name, {}, stack[-1])
-                stack[-1].children.append(new_el)
-                stack.append(new_el)
-                in_tag = False
-            text = ""
-        else:
-            text+=c
-
-    return root
-'''
-def whitespace(text):
-    txt = ""
-    for i in len(text):
-        if(text[i]!=' '):
-            i = i+1
-        else:
-            
-'''
-
-'''///////////////////////////////////////////'''
-
+        self.canvas.create_text(200,150,text=te)
+        '''
+        HSTEP, VSTEP = 13,18
+        x_co , y_co = HSTEP , VSTEP
+        for c in te:
+            self.canvas.create_text(x_co,y_co,text=c)
+            x_co += HSTEP;
+            if x_co > WEDTH-HSTEP:
+                y_co += VSTEP
+                x_co = HSTEP
+            elif y_co>HEIGHT-VSTEP:
+                break
 
 class URL:
 
@@ -173,16 +121,29 @@ def show(body):
             in_tag = False
         elif not in_tag:
             print(c,end="")
+
+def lex(body):
+    in_tag = False;
+    text = ""
+    for c in body:
+        if c=='<':
+            in_tag = True
+        elif c=='>':
+            in_tag = False
+        elif not in_tag:
+            text += c
+    return text
+'''
 def load(url):
     obj = URL(url)
     body = obj.__request__()
     show(body)
             
-'''
+
 if __name__ == "__main__":
     import sys
     load(sys.argv[1])
-'''
+
 
 _html = "<tag>This</tag>"
 root = htmlTree(_html)
@@ -197,5 +158,13 @@ def prRoot(root):
             prRoot(c)
 
 prRoot(root)
+'''
 
-    
+if __name__ == "__main__":
+    import sys
+    browser = Browser()
+    browser.load(sys.argv[1])
+    tkinter.mainloop()
+
+
+  
