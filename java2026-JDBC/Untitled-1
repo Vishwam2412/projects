@@ -1,0 +1,21 @@
+[20:42, 30/3/2026] +91 99116 80990: Day 1 Classwork 
+1	Install	a	database	(MySQL	or	Oracle).	Program	to	illustra
+te	JDBC connectivity. Program for maintaining database by
+sending queries.
+2	Write program to create a demo table emp having fields is,
+name, city and insert two rows by using JDBC.
+3	Write a Java program using Statement to create a table
+Students with fields id, name, age, and grade.
+4	Write a Java program using Statement to insert multiple
+records into the Students table
+5	Write a Java program to demonstrate a money transfer
+transaction between two bank accounts. Ensure that both debit
+and credit operations are either committed together or rolled
+back in case of an error.
+6	Write a Java program using PreparedStatement to delete
+student records where grade is below a given threshold.
+[20:46, 30/3/2026] +91 99116 80990: Day 1_Homework 
+7	Write a Java program using PreparedStatement to insert multiple records efficiently using batch execution.
+8	Write a Java program to call a stored procedure that calculates the total salary of employees in a given department.
+9	Implement a java program using TCL statements commit (), rollback(), setAutoCommit(), setSavepoint(), and releaseSavepoint() method on Employee table.
+10	Write a servlet program to select the details of an employee (emp id, empname, empadd,empphone) and display on browser in appropriate format.
