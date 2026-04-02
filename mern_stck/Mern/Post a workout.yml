@@ -5,7 +5,15 @@ info:
 
 http:
   method: POST
-  url: http://localhost:4000/api/workout
+  url: http://localhost:4000/api/workout/
+  body:
+    type: json
+    data: |-
+      {
+        "title":"Situps",
+        "reps":0,
+        "load":30
+      }
   auth: inherit
 
 settings:
