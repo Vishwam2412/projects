@@ -16,52 +16,52 @@ import java.sql.DriverManager;
 @WebServlet("/hello")
 public class MyServlet extends HttpServlet {
 
-    // public void doGet(HttpServletRequest request, HttpServletResponse response) 
-    //         throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
                 
-    //             response.setContentType("text/html");
-    //             PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
 
 
-    //             String url = "jdbc:mariadb://127.0.0.1:3306/java2026";
-    //             String usr = "root";
-    //             String passWord = "java2026";
+                String url = "jdbc:mariadb://127.0.0.1:3306/java2026";
+                String usr = "root";
+                String passWord = "java2026";
 
-    //             try{
-    //                 // Class.forName("org.mariadb.jdbc.Driver");
-    //                 Connection conn = DriverManager.getConnection(url,usr,passWord);
-    //                 Statement stmt = conn.createStatement();
-    //                 ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
+                try{
+                    // Class.forName("org.mariadb.jdbc.Driver");
+                    Connection conn = DriverManager.getConnection(url,usr,passWord);
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
 
-    //                 out.println("<h3>--- DataBase Entries ---</h3>");
-    //                 out.println("<table border='1'><tr><th>Acc No</th><th>Name</th><th>Balance</th></tr>");
+                    out.println("<h3>--- DataBase Entries ---</h3>");
+                    out.println("<table border='1'><tr><th>Acc No</th><th>Name</th><th>Balance</th></tr>");
 
-    //                 while(rs.next()){
-    //                     int acc = rs.getInt("acc_no");
-    //                     String name = rs.getString("name");
-    //                     Double bal = rs.getDouble("balance");
-    //                     out.println("<tr><td>" + acc + "</td><td>" + name + "</td><td>" + bal + "</td></tr>");
-    //                     // System.out.println("Account No: "+acc+" | Name: "+name+" | Balance: "+bal);
-    //                 }
-    //                 out.println("</table>");
-    //                 rs.close();
-    //                 stmt.close();
-    //                 conn.close();
+                    while(rs.next()){
+                        int acc = rs.getInt("acc_no");
+                        String name = rs.getString("name");
+                        Double bal = rs.getDouble("balance");
+                        out.println("<tr><td>" + acc + "</td><td>" + name + "</td><td>" + bal + "</td></tr>");
+                        // System.out.println("Account No: "+acc+" | Name: "+name+" | Balance: "+bal);
+                    }
+                    out.println("</table>");
+                    rs.close();
+                    stmt.close();
+                    conn.close();
 
-    //             }catch(Exception e){
-    //                 e.printStackTrace();
-    //             }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
                 
-    //             out.println("<html><p>DataBase Connected</p></html>");
+                out.println("<html><p>DataBase Connected</p></html>");
 
 
         
-    //     out.println("<html><body>");
-    //     out.println("<h2>Servlet Success!</h2>");
-    //     out.println("<p>Running on Arch Linux with Tomcat 10 </p>");
-    //     out.println("<p>This is the lupdated parameter</p>");
-    //     out.println("</body></html>");
-    // }
+        out.println("<html><body>");
+        out.println("<h2>Servlet Success!</h2>");
+        out.println("<p>Running on Arch Linux with Tomcat 10 </p>");
+        out.println("<p>This is the lupdated parameter</p>");
+        out.println("</body></html>");
+    }
 
 
     protected void doGet(HttpServletRequest req , HttpServletResponse res){
