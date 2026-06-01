@@ -1,8 +1,17 @@
 import socket 
 import ssl
 import tkinter
+import tkinter.font
 
-WIDTH , HEIGHT = 800 , 600
+#bi_times = tkinter.font.Font(
+#    family="Times",
+#    size=16,
+#    weight="bold",
+#    slant="italic",
+#)
+
+
+WIDTH , HEIGHT = 800 , 900
 SCROLL_STEP = 100
 HSTEP , VSTEP = 13,18
 class Browser:
@@ -15,18 +24,34 @@ class Browser:
             )
         self.canvas.pack()
         self.scroll = 0
+        self.display_list = []
         self.window.bind("<Down>",self.scrolldown)
         self.window.bind("<Up>",self.scrollup)
+        #self.window.bind("<MouseWheel",self.mouse_wheel_action)
+        self.window.bind("<Button-4>",self.scrollup)
+        self.window.bind("<Button-5>",self.scrolldown)
+
     
+    """"
+
+    def mouse_wheel_action(event):
+        if event.delta>0:
+            self.scrollup
+        else:
+            self.scrolldown
+
+    """
+
+
     def scrolldown(self,e):
         self.scroll += SCROLL_STEP
-        self.draw()
+        self.draw(self.display_list)
 
     def scrollup(self,e):
         if self.scroll == 0 :
             return
         self.scroll -= SCROLL_STEP
-        self.draw()
+        self.draw(self.display_list)
     
     def load(self,url):
         obj = URL(url)
@@ -41,7 +66,8 @@ class Browser:
         for x , y , ch in display_list:
             if y>self.scroll + HEIGHT:continue
             if y+VSTEP < self.scroll :continue
-            self.canvas.create_text(x,y-self.scroll,text=ch)
+            self.display_list = display_list
+            self.canvas.create_text(x,y-self.scroll,text=ch )
 
         
         '''
@@ -109,9 +135,13 @@ class URL:
 
             return content
 
+
         s = socket.socket(family=socket.AF_INET,type=socket.SOCK_STREAM,proto=socket.IPPROTO_TCP,)
         s.connect((self.host,self.port))
         
+
+
+
 
         if self.schema=="https":
             ctx = ssl.create_default_context()
@@ -139,6 +169,8 @@ class URL:
         s.close()
         return content
 
+
+
 def show(body):
     in_tag = False
     for c in body:
@@ -149,16 +181,34 @@ def show(body):
         elif not in_tag:
             print(c,end="")
 
+
+#def layout(text):
+#    display_list = []
+#    HSTEP , VSTEP = 13,18
+#    cursor_x , cursor_y = HSTEP , VSTEP
+#    for c in text:
+#        display_list.append((cursor_x,cursor_y,c))
+#        cursor_x += HSTEP
+#        if(c=='\n' or cursor_x >= WIDTH-HSTEP):
+#            cursor_y += VSTEP
+#            cursor_x = HSTEP
+#    return display_list
+
 def layout(text):
+    font = tkinter.font.Font()
     display_list = []
-    HSTEP , VSTEP = 13,18
+    HSTEP , VSTEP = 13 , 18
     cursor_x , cursor_y = HSTEP , VSTEP
-    for c in text:
-        display_list.append((cursor_x,cursor_y,c))
-        cursor_x += HSTEP
-        if(cursor_x >= WIDTH-HSTEP):
-            cursor_y += VSTEP
+    for word in text.split():
+        w = font.measure(word)
+        if cursor_x+w>WIDTH-HSTEP:
+            cursor_y += font.metrics("linespace") *1.25
+            cursor_x = HSTEP
+        display_list.append((cursor_x,cursor_y,word))
+        cursor_x += w + font.measure(" ")
     return display_list
+
+
 
 
 def lex(body):
@@ -174,6 +224,9 @@ def lex(body):
     return text
 
 
+def mouse_wheel_action(event):
+    if event.delta>0:
+        self
 
 
 '''

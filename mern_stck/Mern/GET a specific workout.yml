@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:4000/api/workout/123
+  url: http://localhost:4000/api/workout/69da36ca5023fc843ebe43f1
   auth: inherit
 
 settings:
